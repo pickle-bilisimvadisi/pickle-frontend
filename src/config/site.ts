@@ -23,5 +23,6 @@ export const siteConfig = {
       forgotPassword: "/auth/forgot-password",
       logout: "/auth/logout",
     },
+    pricing: "/pricing",
   },
 };

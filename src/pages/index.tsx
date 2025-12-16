@@ -1,4 +1,9 @@
-import { FaqSection, HeroSection, ProgressSection } from "@/components/home";
+import {
+  FaqSection,
+  HeroSection,
+  PainPlanSection,
+  ProgressSection,
+} from "@/components/home";
 import DefaultLayout from "@/layouts/default";
 
 export default function IndexPage() {
@@ -6,6 +11,7 @@ export default function IndexPage() {
     <DefaultLayout>
       <HeroSection />
       <ProgressSection />
+      <PainPlanSection />
       <FaqSection />
     </DefaultLayout>
   );
