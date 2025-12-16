@@ -1,45 +1,90 @@
 import axios from "axios";
-import Cookies from "js-cookie";
+import useAuthStore from "@/stores/useAuthStore";
 import { addToast } from "@heroui/toast";
 
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api",
-  headers: {
-    "Content-Type": "application/json",
-  },
+const BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
+
+const axiosClient = axios.create({
+  baseURL: BASE_URL,
+  withCredentials: true,
 });
 
-api.interceptors.request.use((config) => {
-  const access_token = localStorage.getItem("access_token");
-  const refresh_token = Cookies.get("refresh_token");
+axiosClient.interceptors.request.use(
+  (config) => {
+    const state = useAuthStore.getState();
+    const token = state.accessToken;
 
-  if (access_token) {
-    config["headers"].Authorization = `Bearer ${access_token}`;
-  } else if (refresh_token && !access_token) {
-    // If there's a refresh token but no access token, remove the refresh token
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
     return config;
-  }
-  return config;
-});
+  },
+  (error) => Promise.reject(error)
+);
 
-api.interceptors.response.use(
+let isRefreshing = false;
+let failedQueue: Array<{
+  resolve: (value?: unknown) => void;
+  reject: (reason?: any) => void;
+}> = [];
+
+const processQueue = (error: any, token = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+  failedQueue = [];
+};
+
+axiosClient.interceptors.response.use(
   (response) => response,
-  (error) => {
-    error
-      ? addToast({
-          title: "Error",
-          description:
-            error.response?.data?.message || "An unexpected error occurred.",
-          severity: "warning",
+  async (error) => {
+    const originalRequest = error.config;
+    addToast({
+      title: "An error occurred while processing your request.",
+      severity: "danger",
+    });
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      if (isRefreshing) {
+        return new Promise(function (resolve, reject) {
+          failedQueue.push({ resolve, reject });
         })
-      : addToast({
-          title: "Error",
-          description: "An unexpected error occurred.",
-          severity: "danger",
-        });
+          .then((token) => {
+            originalRequest.headers["Authorization"] = "Bearer " + token;
+            return axiosClient(originalRequest);
+          })
+          .catch((err) => Promise.reject(err));
+      }
 
+      originalRequest._retry = true;
+      isRefreshing = true;
+      const state = useAuthStore.getState();
+
+      try {
+        const response = await axiosClient.post("/auth/refresh");
+        const { accessToken } = response.data;
+
+        state.setAccessToken(accessToken);
+
+        processQueue(null, accessToken);
+
+        originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
+        return axiosClient(originalRequest);
+      } catch (refreshError) {
+        processQueue(refreshError, null);
+        state.signOut();
+
+        return Promise.reject(refreshError);
+      } finally {
+        isRefreshing = false;
+      }
+    }
     return Promise.reject(error);
   }
 );
 
-export default api;
+export default axiosClient;
