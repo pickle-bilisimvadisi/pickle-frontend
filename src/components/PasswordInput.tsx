@@ -2,12 +2,16 @@ import { validatePassword } from "@/utils/validatePassword";
 import { Input, InputProps } from "@heroui/input";
 import React from "react";
 
-const PasswordInput: React.FC<{
-  className?: InputProps["className"];
-  name?: InputProps["name"];
-  minLength?: InputProps["minLength"];
-  errorMessage?: InputProps["errorMessage"];
-}> = ({ className, name, minLength, errorMessage }) => {
+interface PasswordInputProps extends InputProps {}
+
+const PasswordInput: React.FC<PasswordInputProps> = ({
+  className,
+  name,
+  minLength,
+  errorMessage,
+  label,
+  validate,
+}) => {
   const [isVisible, setIsVisible] = React.useState(false);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
@@ -31,12 +35,12 @@ const PasswordInput: React.FC<{
       isRequired
       errorMessage={errorMessage}
       labelPlacement="outside"
-      label="Password"
+      label={label ? label : "Password"}
       name={name ? name : "password"}
       placeholder="Enter your password"
       type={isVisible ? "text" : "password"}
       minLength={minLength ? minLength : 6}
-      validate={validatePassword}
+      validate={ validate ? validate : validatePassword }
     />
   );
 };
