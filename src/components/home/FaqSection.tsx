@@ -1,11 +1,11 @@
 import React from "react";
 import { Accordion, AccordionItem } from "@heroui/accordion";
+import HomeSectionLayout from "@/layouts/HomeSectionLayout";
 
 const FaqSection: React.FC = () => {
   return (
-    <section className="py-8 md:py-10">
-      <h2 className="text-2xl font-bold mb-6 text-center">FAQ</h2>
-      <div className="max-w-4xl mx-auto">
+    <HomeSectionLayout title="FAQ">
+      <div className="max-w-4xl w-full mx-auto">
         <Accordion>
           {faqs.map((faq, index) => (
             <AccordionItem
@@ -18,7 +18,7 @@ const FaqSection: React.FC = () => {
           ))}
         </Accordion>
       </div>
-    </section>
+    </HomeSectionLayout>
   );
 };
 
