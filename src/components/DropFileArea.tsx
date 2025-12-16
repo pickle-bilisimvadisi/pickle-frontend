@@ -12,10 +12,12 @@ import useAuthStore from "@/stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import { siteConfig } from "@/config/site";
 import { addToast } from "@heroui/toast";
+import { Button } from "@heroui/button";
 
 export default function DropFileArea() {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const folderInputRef = useRef<HTMLInputElement>(null);
   const authState = useAuthStore((state) => state);
   const navigate = useNavigate();
 
@@ -27,9 +29,11 @@ export default function DropFileArea() {
     navigate(siteConfig.routerPaths.auth.signIn);
   };
 
-  const handleClick = () => {
-    if (authState.isAuthenticated) {
-      fileInputRef.current?.click();
+  const handleClick = (type: "file" | "folder") => {
+    if (!authState.isAuthenticated) {
+      if (type === "folder") {
+        folderInputRef.current?.click();
+      } else fileInputRef.current?.click();
     } else {
       redirectLogin();
     }
@@ -54,7 +58,7 @@ export default function DropFileArea() {
   };
 
   return (
-    <div className="relative w-full max-w-3xl h-[400px] flex items-center justify-center text-center">
+    <div className="relative w-full max-w-3xl min-h-[400px] flex items-center justify-center text-center">
       <FloatingCard
         icon={<FileTextIcon size={20} className="text-green-500" />}
         className="absolute left-[5%] top-[30%] -translate-x-1/2 -translate-y-1/2 z-20 hidden md:flex"
@@ -78,13 +82,12 @@ export default function DropFileArea() {
       />
 
       <div
-        onClick={handleClick}
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
         onDrop={onDrop}
         className={`
-            relative z-0 flex flex-col items-center justify-center w-3/4 h-80
-            border-2 border-dashed rounded-[32px] transition-all duration-300 cursor-pointer
+            relative z-0 flex flex-col items-center justify-center w-3/4 h-full px-6 py-10
+            border-2 border-dashed rounded-[32px] transition-all duration-300
             ${
               isDragging
                 ? "border-blue-500 bg-blue-50"
@@ -92,7 +95,23 @@ export default function DropFileArea() {
             }
           `}
       >
-        <input type="file" multiple className="hidden" ref={fileInputRef} />
+        <input
+          type="file"
+          className="hidden"
+          name="file"
+          ref={fileInputRef}
+        ></input>
+        <input
+          type="file"
+          className="hidden"
+          name="files[]"
+          ref={folderInputRef}
+          id="files"
+          multiple
+          directory=""
+          webkitdirectory=""
+          mozdirectory=""
+        ></input>
 
         <div className="mb-6 p-4 rounded-full bg-blue-50 text-blue-400">
           <CloudUploadIcon width={48} height={48} />
@@ -104,6 +123,15 @@ export default function DropFileArea() {
         <p className="text-gray-400 text-xs sm:text-sm mt-2">
           Tıklayın ya da Dosyalarınızı Sürükleyip Bırakın
         </p>
+        <div className="text-2xl my-4 text-gray-400">&</div>
+        <div className="flex flex-col sm:flex-row items-center gap-4">
+          <Button onPress={() => handleClick("folder")} color="primary">
+            Select Folder
+          </Button>
+          <Button onPress={() => handleClick("file")} color="primary">
+            Select Files
+          </Button>
+        </div>
       </div>
     </div>
   );

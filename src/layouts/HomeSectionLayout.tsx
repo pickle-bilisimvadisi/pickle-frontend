@@ -11,7 +11,7 @@ const HomeSectionLayout: React.FC<
             className={
               isHero
                 ? "text-sm md:text-lg text-primary/70"
-                : "text-sm md:text-md text-primary/50"
+                : "text-sm md:text-md text-primary/70"
             }
           >
             {subtitle}
