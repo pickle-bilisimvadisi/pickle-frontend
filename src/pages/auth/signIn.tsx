@@ -5,22 +5,26 @@ import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 import { validateEmail } from "@/utils/validateEmail";
-import { api, END_POINTS } from "@/services/api";
 import AuthLayout from "@/layouts/AuthLayout";
+import { addToast } from "@heroui/toast";
+import useAuthStore from "@/stores/useAuthStore";
 
 const SignIn: React.FC = () => {
+  const authState = useAuthStore((state) => state);
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     try {
-      const data = {
-        email: formData.get("email") as string,
-        password: formData.get("password") as string,
-      };
-      const response = await api.post(END_POINTS.AUTH.SIGN_IN, data);
-      console.log("Sign-in successful:", response.data);
+      await authState.signIn(
+        formData.get("email") as string,
+        formData.get("password") as string
+      );
+      addToast({
+        title: `Logged in successfully!`,
+        severity: "success",
+      });
     } catch (error) {
-      console.error("Error processing sign-in:", error);
+      console.error("SignIn error:", error);
     }
   };
 
@@ -40,15 +44,21 @@ const SignIn: React.FC = () => {
           type="email"
           className="my-4"
           validate={validateEmail}
+          disabled={authState.isLoading}
         />
 
-        <PasswordInput />
+        <PasswordInput disabled={authState.isLoading} />
 
         <Link href="/auth/forgot-password" className="self-end" size="sm">
           Forgot Password?
         </Link>
 
-        <Button color="primary" type="submit" className="w-full">
+        <Button
+          color="primary"
+          type="submit"
+          className="w-full"
+          isLoading={authState.isLoading}
+        >
           Sign In
         </Button>
         <div className="mt-4 text-center text-sm ">

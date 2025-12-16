@@ -4,5 +4,6 @@ export default {
     SIGN_UP: "/auth/register",
     LOGOUT: "/auth/logout",
     REFRESH_TOKEN: "/auth/refresh-token",
+    FORGOT_PASSWORD: "/auth/forgot-password",
   },
 };

@@ -6,16 +6,13 @@ import React, { useState } from "react";
 import { Form } from "@heroui/form";
 import { Link } from "@heroui/link";
 import { InputOtp } from "@heroui/input-otp";
+import { AUTH_SERVICE } from "@/services/authService";
+import { addToast } from "@heroui/toast";
 
 const otpLength = 6;
 
 const ForgotPassword: React.FC = () => {
   const [progress, setProgress] = useState<1 | 2 | 3>(1);
-  const handleForgotPassword = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const email = formData.get("email") as string;
-  };
 
   const handleNextStep = () => {
     setProgress((prev) => (prev < 3 ? ((prev + 1) as 2 | 3) : prev));
@@ -33,15 +30,22 @@ const ForgotPassword: React.FC = () => {
 const FirstProgressStep: React.FC<{
   nextStep: () => void;
 }> = ({ nextStep }) => {
-  const handleForgotPassword = (event: React.FormEvent<HTMLFormElement>) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleForgotPassword = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
+    setIsLoading(true);
     const formData = new FormData(event.currentTarget);
     const email = formData.get("email") as string;
     try {
-      console.log("Password reset link sent to:", email);
+      await AUTH_SERVICE.forgotPassword(email);
       nextStep();
     } catch (error) {
-      console.error("Error sending password reset email:", error);
+      console.error("Error sending forgot password request:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -60,9 +64,15 @@ const FirstProgressStep: React.FC<{
         type="email"
         className="my-4"
         validate={validateEmail}
+        disabled={isLoading}
       />
 
-      <Button color="primary" type="submit" className="w-full">
+      <Button
+        color="primary"
+        type="submit"
+        className="w-full"
+        isLoading={isLoading}
+      >
         Send Reset Link
       </Button>
       <div className="mt-4 text-center text-sm ">

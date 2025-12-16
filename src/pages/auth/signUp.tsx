@@ -7,12 +7,16 @@ import { validateEmail } from "@/utils/validateEmail";
 import { api, END_POINTS } from "@/services/api";
 import AuthLayout from "@/layouts/AuthLayout";
 import PasswordInput from "@/components/PasswordInput";
+import { AUTH_SERVICE } from "@/services/authService";
+import { addToast } from "@heroui/toast";
 
 const SignUp: React.FC = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     const formData = new FormData(e.currentTarget);
 
     try {
@@ -23,6 +27,7 @@ const SignUp: React.FC = () => {
         setErrors({
           confirmPassword: "Passwords do not match",
         });
+        setIsLoading(false);
         return;
       } else {
         setErrors({});
@@ -31,10 +36,15 @@ const SignUp: React.FC = () => {
         email: formData.get("email") as string,
         password: password,
       };
-      const response = await api.post(END_POINTS.AUTH.SIGN_UP, data);
-      console.log("Sign-up successful:", response.data);
+      const response = await AUTH_SERVICE.signUp(data);
+      addToast({
+        title: response.data.message || "Sign up successful!",
+        severity: "success",
+      });
     } catch (error) {
       console.error("Error processing sign-up:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -55,17 +65,24 @@ const SignUp: React.FC = () => {
           type="email"
           className="my-4"
           validate={validateEmail}
+          disabled={isLoading}
         />
 
-        <PasswordInput className="my-4" />
+        <PasswordInput className="my-4" disabled={isLoading} />
 
         <PasswordInput
           name="confirmPassword"
           label="Confirm Password"
           className="my-4"
+          disabled={isLoading}
         />
 
-        <Button color="primary" type="submit" className="w-full">
+        <Button
+          color="primary"
+          type="submit"
+          className="w-full"
+          isLoading={isLoading}
+        >
           Sign Up
         </Button>
         <div className="mt-4 text-center text-sm ">

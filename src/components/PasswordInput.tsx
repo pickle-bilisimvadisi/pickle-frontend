@@ -11,6 +11,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   errorMessage,
   label,
   validate,
+  ...props
 }) => {
   const [isVisible, setIsVisible] = React.useState(false);
 
@@ -24,6 +25,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
           className="focus:outline-solid outline-transparent cursor-pointer"
           type="button"
           onClick={toggleVisibility}
+          disabled={props?.disabled}
         >
           {isVisible ? (
             <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
@@ -40,7 +42,8 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
       placeholder="Enter your password"
       type={isVisible ? "text" : "password"}
       minLength={minLength ? minLength : 6}
-      validate={ validate ? validate : validatePassword }
+      validate={validate ? validate : validatePassword}
+      {...props}
     />
   );
 };
