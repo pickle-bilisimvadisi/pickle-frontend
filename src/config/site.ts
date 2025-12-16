@@ -11,12 +11,16 @@ export const siteConfig = {
   ],
   navMenuItems: [
     {
-      label: "Logout",
-      href: "/logout",
+      label: "Home",
+      href: "/",
     },
   ],
-  links: {
-    twitter: "https://twitter.com/",
-    discord: "https://discord.gg/",
+  routerPaths: {
+    home: "/",
+    auth: {
+      signIn: "/auth/sign-in",
+      signUp: "/auth/sign-up",
+      forgotPassword: "/auth/forgot-password",
+    },
   },
 };

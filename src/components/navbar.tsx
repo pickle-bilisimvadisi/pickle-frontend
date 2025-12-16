@@ -1,3 +1,4 @@
+import React from "react";
 import { Link } from "@heroui/link";
 import {
   Navbar as HeroUINavbar,
@@ -13,8 +14,27 @@ import clsx from "clsx";
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
-import { TwitterIcon, DiscordIcon } from "@/components/icons";
 import { Logo } from "@/components/icons";
+import { Button } from "@heroui/button";
+import { useNavigate } from "react-router-dom";
+
+const AuthButtons = () => {
+  const navigate = useNavigate();
+
+  return (
+    <React.Fragment>
+      <Button onPress={() => navigate(siteConfig.routerPaths.auth.signIn)}>
+        Sign In
+      </Button>
+      <Button
+        color="primary"
+        onPress={() => navigate(siteConfig.routerPaths.auth.signUp)}
+      >
+        Sign Up
+      </Button>
+    </React.Fragment>
+  );
+};
 
 export const Navbar = () => {
   return (
@@ -55,12 +75,7 @@ export const Navbar = () => {
         justify="end"
       >
         <NavbarItem className="hidden sm:flex gap-2">
-          <Link isExternal href={siteConfig.links.twitter} title="Twitter">
-            <TwitterIcon className="text-default-500" />
-          </Link>
-          <Link isExternal href={siteConfig.links.discord} title="Discord">
-            <DiscordIcon className="text-default-500" />
-          </Link>
+          <AuthButtons />
           <ThemeSwitch />
         </NavbarItem>
       </NavbarContent>
@@ -74,21 +89,14 @@ export const Navbar = () => {
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
-              <Link
-                color={
-                  index === 2
-                    ? "primary"
-                    : index === siteConfig.navMenuItems.length - 1
-                      ? "danger"
-                      : "foreground"
-                }
-                href="#"
-                size="lg"
-              >
+              <Link color="foreground" href="#" size="lg">
                 {item.label}
               </Link>
             </NavbarMenuItem>
           ))}
+          <NavbarMenuItem className="space-x-2">
+            <AuthButtons />
+          </NavbarMenuItem>
         </div>
       </NavbarMenu>
     </HeroUINavbar>
