@@ -184,3 +184,136 @@ export const SearchIcon = (props: IconSvgProps) => (
     />
   </svg>
 );
+
+export const CloudUploadIcon = (props: IconSvgProps) => (
+  <svg
+    aria-hidden="true"
+    fill="none"
+    focusable="false"
+    height="1em"
+    role="presentation"
+    viewBox="0 0 24 24"
+    width="1em"
+    {...props}
+  >
+    <path
+      d="M16 16L12 12M12 12L8 16M12 12V21M20.39 16.39C22.09 14.84 22.09 12.16 20.39 10.61C18.69 9.06 16.11 9.06 14.41 10.61C13.76 7.72 11.28 5.5 8.25 5.5C4.64 5.5 1.75 8.39 1.75 12C1.75 15.61 4.64 18.5 8.25 18.5H19.5C20.88 18.5 22.11 17.78 22.74 16.68C23.37 15.58 23.37 14.22 22.74 13.12C22.11 12.02 20.88 11.3 19.5 11.3H18.5"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={props.strokeWidth || 1.5}
+    />
+  </svg>
+);
+
+export const FileTextIcon = (props: IconSvgProps) => (
+  <svg
+    aria-hidden="true"
+    fill="none"
+    focusable="false"
+    height="1em"
+    role="presentation"
+    viewBox="0 0 24 24"
+    width="1em"
+    {...props}
+  >
+    <path
+      d="M14.5 2H6.75C5.50736 2 4.5 3.00736 4.5 4.25V19.75C4.5 20.9926 5.50736 22 6.75 22H17.25C18.4926 22 19.5 20.9926 19.5 19.75V8.5L14.5 2Z"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={props.strokeWidth || 1.5}
+    />
+    <path
+      d="M14.5 2V8.5H19.5"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={props.strokeWidth || 1.5}
+    />
+    <path
+      d="M9 13H15M9 17H15M9 9H11"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={props.strokeWidth || 1.5}
+    />
+  </svg>
+);  
+
+export const ImageIcon = (props: IconSvgProps) => (
+  <svg
+    aria-hidden="true"
+    fill="none"
+    focusable="false"
+    height="1em"
+    role="presentation"
+    viewBox="0 0 24 24"
+    width="1em"
+    {...props}
+  >
+    <path
+      d="M21 19V5C21 3.89543 20.1046 3 19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19Z"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={props.strokeWidth || 1.5}
+    />
+    <path
+      d="M3 16L8.5 10.5C9.32843 9.67157 10.6716 9.67157 11.5 10.5L21 20"
+      stroke="currentColor"
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+      strokeWidth={props.strokeWidth || 1.5}
+    />
+    <path
+      d="M14 7C14 8.10457 13.1046 9 12 9C10.8954 9 10 8.10457 10 7C10 5.89543 10.8954 5 12 5C13.1046 5 14 5.89543 14 7Z"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={props.strokeWidth || 1.5}
+    />
+  </svg>
+)
+
+export const FolderIcon = (props: IconSvgProps) => (
+  <svg
+    aria-hidden="true"
+    fill="none"
+    focusable="false"
+    height="1em"
+    role="presentation"
+    viewBox="0 0 24 24"
+    width="1em"
+    {...props}
+  >
+    <path
+      d="M3 8C3 6.89543 3.89543 6 5 6H10L12 8H19C20.1046 8 21 8.89543 21 10V18C21 19.1046 20.1046 20 19 20H5C3.89543 20 3 19.1046 3 18V8Z"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={props.strokeWidth || 1.5}
+    />
+  </svg>
+);
+
+export const VideoIcon = (props: IconSvgProps) => (
+  <svg
+    aria-hidden="true"
+    fill="none"
+    focusable="false"
+    height="1em"
+    role="presentation"
+    viewBox="0 0 24 24"
+    width="1em"
+    {...props}
+  >
+    <path
+      d="M4 4C2.89543 4 2 4.89543 2 6V18C2 19.1046 2.89543 20 4 20H16C17.1046 20 18 19.1046 18 18V12L22 15V9L18 12V6C18 4.89543 17.1046 4 16 4H4Z"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={props.strokeWidth || 1.5}
+    />
+  </svg>
+);
