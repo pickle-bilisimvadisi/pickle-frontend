@@ -1,12 +1,15 @@
 import HomeSectionLayout from "@/layouts/HomeSectionLayout";
 import React from "react";
 import { Image } from "@heroui/image";
+import ProgressImg1 from "@/assets/images/progress-step-1.webp";
+import ProgressImg2 from "@/assets/images/progress-step-2.webp";
+import ProgressImg3 from "@/assets/images/progress-step-3.webp";
 
 const ProgressSection: React.FC = () => {
   return (
     <HomeSectionLayout
-      subtitle="This is the progress section of the home page."
-      title="Progress Section"
+      subtitle="Share Your Files in 3 Easy Steps"
+      title="How to Upload Large Files and Folders Using Filemail"
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {progressData.map((item) => (
@@ -41,7 +44,7 @@ const progressData = [
     title: "Select Files and Folders",
     description:
       "Browse and select the files you want to upload. Or you can drag and drop your files. You can even leave a message on the download page.",
-    imageUrl: "/images/progress-step-1.png",
+    imageUrl: ProgressImg1
   },
   {
     id: 2,
@@ -49,7 +52,7 @@ const progressData = [
     title: "Upload Your Files or Folders",
     description:
       "After you select the files, we will begin uploading them. Your files are secure with end-to-end encryption and a secure file hosting solution.",
-    imageUrl: "/images/progress-step-2.png",
+    imageUrl: ProgressImg2
   },
   {
     id: 3,
@@ -57,6 +60,6 @@ const progressData = [
     title: "Share the Download Link",
     description:
       "After the upload is complete, we host your files in the cloud. You will receive a direct link to your stored files. You can share the link with anyone you want, anywhere you want.",
-    imageUrl: "/images/progress-step-3.png",
+    imageUrl: ProgressImg3
   },
 ];

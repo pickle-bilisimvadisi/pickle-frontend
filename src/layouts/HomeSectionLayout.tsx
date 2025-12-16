@@ -10,8 +10,8 @@ const HomeSectionLayout: React.FC<
           <h5
             className={
               isHero
-                ? "text-sm md:text-lg text-primary/70"
-                : "text-sm md:text-md text-primary/70"
+                ? "text-sm md:text-lg text-primary/70 font-semibold"
+                : "text-sm md:text-md text-primary/70 font-semibold"
             }
           >
             {subtitle}
@@ -21,8 +21,8 @@ const HomeSectionLayout: React.FC<
           <h2
             className={
               isHero
-                ? "text-4xl md:text-6xl font-bold"
-                : "text-2xl md:text-4xl font-semibold"
+                ? "text-4xl md:text-6xl font-bold "
+                : "text-2xl md:text-4xl font-semibold max-w-lg "
             }
           >
             {title}
