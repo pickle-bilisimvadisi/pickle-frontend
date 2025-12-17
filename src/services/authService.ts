@@ -18,7 +18,24 @@ const forgotPassword = async (email: string): Promise<any> => {
   return response;
 };
 
+const verifyOtp = async (
+  data: {
+    email: string;
+    otp: string;
+  },
+  type: "signUp" | "forgotPassword"
+): Promise<any> => {
+  const response = await api.post(
+    type == "signUp"
+      ? END_POINTS.AUTH.VERIFY_EMAIL
+      : END_POINTS.AUTH.VERIFY_OTP,
+    data
+  );
+  return response;
+};
+
 export const AUTH_SERVICE = {
   signUp,
   forgotPassword,
+  verifyOtp,
 };

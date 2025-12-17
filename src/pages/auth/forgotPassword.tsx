@@ -85,9 +85,10 @@ const FirstProgressStep: React.FC<{
   );
 };
 
-const SecondProgressStep: React.FC<{
+export const SecondProgressStep: React.FC<{
   nextStep: () => void;
-}> = ({ nextStep }) => {
+  postOtp?: (otp: string) => Promise<void>;
+}> = ({ nextStep, postOtp }) => {
   const [value, setValue] = React.useState("");
 
   const handleVerifyOtp = (value: string) => {
@@ -96,6 +97,7 @@ const SecondProgressStep: React.FC<{
       if (value.length === otpLength) {
         nextStep();
       }
+      postOtp?.(value);
     } catch (error) {}
   };
 
@@ -114,7 +116,7 @@ const SecondProgressStep: React.FC<{
   );
 };
 
-const ThirdProgressStep: React.FC = () => {
+export const ThirdProgressStep: React.FC = () => {
   return (
     <div className="flex flex-col items-center gap-2">
       <h1 className=" text-2xl font-bold ">OTP Verified!</h1>
