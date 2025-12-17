@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { api, END_POINTS } from "@/services/api";
 import { siteConfig } from "@/config/site";
+import Cookies from "js-cookie";
 
 interface AuthState {
   user: any | null;
@@ -24,13 +25,15 @@ const useAuthStore = create<AuthState>((set, _) => ({
   signIn: async (email: string, password: string) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await api.post(END_POINTS.AUTH.SIGN_IN, { email, password });
+      const response = await api.post(END_POINTS.AUTH.SIGN_IN, {
+        email,
+        password,
+      });
 
-      const { accessToken, user } = response.data;
+      const accessToken = response.data?.data?.access_token;
 
       localStorage.setItem("accessToken", accessToken);
       set({
-        user,
         accessToken,
         isAuthenticated: true,
         isLoading: false,
@@ -52,6 +55,7 @@ const useAuthStore = create<AuthState>((set, _) => ({
   signOut: async () => {
     try {
       await api.post(END_POINTS.AUTH.LOGOUT);
+      Cookies.remove("refresh_token");
     } catch (error) {
       console.error("Logout error", error);
     } finally {

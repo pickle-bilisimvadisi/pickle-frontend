@@ -7,7 +7,6 @@ import { siteConfig } from "./config/site";
 import Dashboard from "./pages/dashboard";
 import FilesPage from "./pages/dashboard/files";
 
-
 const routerPaths = siteConfig.routerPaths;
 
 function App() {

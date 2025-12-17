@@ -8,9 +8,12 @@ import { validateEmail } from "@/utils/validateEmail";
 import AuthLayout from "@/layouts/AuthLayout";
 import { addToast } from "@heroui/toast";
 import useAuthStore from "@/stores/useAuthStore";
+import { useNavigate } from "react-router-dom";
 
 const SignIn: React.FC = () => {
   const authState = useAuthStore((state) => state);
+  const navigate = useNavigate();
+  
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -23,6 +26,7 @@ const SignIn: React.FC = () => {
         title: `Logged in successfully!`,
         severity: "success",
       });
+      navigate("/dashboard");
     } catch (error) {
       console.error("SignIn error:", error);
     }
