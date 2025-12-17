@@ -1,5 +1,6 @@
 import { create } from "zustand";
-import { api } from "@/services/api";
+import { api, END_POINTS } from "@/services/api";
+import { siteConfig } from "@/config/site";
 
 interface AuthState {
   user: any | null;
@@ -23,7 +24,7 @@ const useAuthStore = create<AuthState>((set, _) => ({
   signIn: async (email: string, password: string) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await api.post("/auth/login", { email, password });
+      const response = await api.post(END_POINTS.AUTH.SIGN_IN, { email, password });
 
       const { accessToken, user } = response.data;
 
@@ -50,7 +51,7 @@ const useAuthStore = create<AuthState>((set, _) => ({
 
   signOut: async () => {
     try {
-      await api.post("/auth/logout");
+      await api.post(END_POINTS.AUTH.LOGOUT);
     } catch (error) {
       console.error("Logout error", error);
     } finally {
@@ -60,7 +61,7 @@ const useAuthStore = create<AuthState>((set, _) => ({
         accessToken: null,
         isAuthenticated: false,
       });
-      window.location.href = "/login";
+      window.location.href = siteConfig.routerPaths.auth.signIn;
     }
   },
 }));
