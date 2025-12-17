@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const SidebarItem = ({ icon, title, isActive, href = "" }: Props) => {
-  const { collapsed, setCollapsed } = useSidebarContext();
+  const { setCollapsed } = useSidebarContext();
 
   const handleClick = () => {
     if (window.innerWidth < 768) {
@@ -19,10 +19,7 @@ export const SidebarItem = ({ icon, title, isActive, href = "" }: Props) => {
     }
   };
   return (
-    <Link
-      to={href}
-      className="text-default-900 active:bg-none max-w-full"
-    >
+    <Link to={href} className="text-default-900 active:bg-none max-w-full">
       <div
         className={clsx(
           isActive

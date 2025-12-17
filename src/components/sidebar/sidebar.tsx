@@ -6,7 +6,6 @@ import { SidebarItem } from "./sidebar-item";
 import { SidebarMenu } from "./sidebar-menu";
 import { useSidebarContext } from "@/ctx/layout-context";
 import { ChangeLogIcon } from "../icons/sidebar/changelog-icon";
-import { BalanceIcon } from "../icons/sidebar/balance-icon";
 import { siteConfig } from "@/config/site";
 
 const dashboardRoutes = siteConfig.routerPaths.dashboard;

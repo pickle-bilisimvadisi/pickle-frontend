@@ -1,8 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { ChevronDownIcon } from "../icons/sidebar/chevron-down-icon";
 import { Accordion, AccordionItem } from "@heroui/accordion";
-import clsx from "clsx";
 
 interface Props {
   icon: React.ReactNode;
@@ -11,8 +10,6 @@ interface Props {
 }
 
 export const CollapseItems = ({ icon, items, title }: Props) => {
-  const [open, setOpen] = useState(false);
-
   return (
     <div className="flex gap-4 h-full items-center cursor-pointer">
       <Accordion className="px-0">
