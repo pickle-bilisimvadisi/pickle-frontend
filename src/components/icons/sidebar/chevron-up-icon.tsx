@@ -1,5 +1,3 @@
-import React from "react";
-
 interface Props extends React.SVGAttributes<SVGElement> {}
 
 export const ChevronUpIcon = ({ ...props }: Props) => {

@@ -7,7 +7,6 @@ import { Form } from "@heroui/form";
 import { Link } from "@heroui/link";
 import { InputOtp } from "@heroui/input-otp";
 import { AUTH_SERVICE } from "@/services/authService";
-import { addToast } from "@heroui/toast";
 
 const otpLength = 6;
 

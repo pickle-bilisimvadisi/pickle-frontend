@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Form } from "@heroui/form";
 import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
@@ -9,7 +9,6 @@ import PasswordInput from "@/components/PasswordInput";
 import { AUTH_SERVICE } from "@/services/authService";
 import { addToast } from "@heroui/toast";
 import { SecondProgressStep, ThirdProgressStep } from "./forgotPassword";
-import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/stores/useAuthStore";
 
 const SignUp: React.FC = () => {
@@ -17,7 +16,6 @@ const SignUp: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [progress, setProgress] = useState<1 | 2 | 3>(1);
   const [email, setEmail] = useState<string>("");
-  const navigate = useNavigate();
   const authState = useAuthStore((state) => state);
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
