@@ -21,6 +21,8 @@ export const siteConfig = {
       signIn: "/auth/sign-in",
       signUp: "/auth/sign-up",
       forgotPassword: "/auth/forgot-password",
+      logout: "/auth/logout",
     },
+    pricing: "/pricing",
   },
 };
