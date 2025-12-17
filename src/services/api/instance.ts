@@ -1,6 +1,7 @@
 import axios from "axios";
 import useAuthStore from "@/stores/useAuthStore";
 import { addToast } from "@heroui/toast";
+import { END_POINTS } from ".";
 
 const BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
@@ -45,7 +46,7 @@ axiosClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     addToast({
-      title: "An error occurred while processing your request.",
+      title: error.response?.data?.message || "An error occurred",
       severity: "danger",
     });
     if (error.response?.status === 401 && !originalRequest._retry) {
@@ -65,7 +66,7 @@ axiosClient.interceptors.response.use(
       const state = useAuthStore.getState();
 
       try {
-        const response = await axiosClient.post("/auth/refresh");
+        const response = await axiosClient.post(END_POINTS.AUTH.REFRESH_TOKEN);
         const { accessToken } = response.data;
 
         state.setAccessToken(accessToken);

@@ -14,7 +14,7 @@ const AuthLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           autoplay
           width="80%"
           height="80%"
-          className="min-w-[400px]"
+          className="min-w-[350px]"
         />
       </div>
       <div className="flex h-full justify-center items-center md:col-span-2 ">
