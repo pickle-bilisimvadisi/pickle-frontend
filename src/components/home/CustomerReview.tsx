@@ -39,21 +39,21 @@ const reviews = [
   {
     id: 1,
     content:
-      "For me, Filemail is the perfect companion for my media transfer needs. It's fast, reliable, and in my opinion, far superior to all other file transfer platforms. A+",
+      "For me, Pickle is the perfect companion for my media transfer needs. It's fast, reliable, and in my opinion, far superior to all other file transfer platforms. A+",
     author: "Jane D.",
     company: "Acme Corp",
   },
   {
     id: 2,
     content:
-      "I have been using Filemail for several years with great satisfaction. The Filemail Desktop application in particular provides a very fast service for both uploading and downloading. You can also easily upload files larger than 2 GB, and the Italian localization makes everything easy and fast.",
+      "I have been using Pickle for several years with great satisfaction. The Pickle Desktop application in particular provides a very fast service for both uploading and downloading. You can also easily upload files larger than 2 GB, and the Italian localization makes everything easy and fast.",
     author: "John S.",
     company: "Beta LLC",
   },
   {
     id: 3,
     content:
-      "Filemail solved all my past file transfer problems. It's fast, reliable, and easy to use. I'm very satisfied with the service. We send our shows all over the world, and Filemail is a huge help.",
+      "Pickle solved all my past file transfer problems. It's fast, reliable, and easy to use. I'm very satisfied with the service. We send our shows all over the world, and Pickle is a huge help.",
     author: "Alice W.",
     company: "Gamma Inc",
   },
