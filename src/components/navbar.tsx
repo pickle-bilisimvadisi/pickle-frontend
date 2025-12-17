@@ -17,22 +17,34 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { Logo } from "@/components/icons";
 import { Button } from "@heroui/button";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "@/stores/useAuthStore";
 
 const AuthButtons = () => {
   const navigate = useNavigate();
+  const authState = useAuthStore((state) => state);
 
   return (
-    <React.Fragment>
-      <Button onPress={() => navigate(siteConfig.routerPaths.auth.signIn)}>
-        Sign In
-      </Button>
-      <Button
-        color="primary"
-        onPress={() => navigate(siteConfig.routerPaths.auth.signUp)}
-      >
-        Sign Up
-      </Button>
-    </React.Fragment>
+    <>
+      {!authState?.isAuthenticated ? (
+        <>
+          <Button onPress={() => navigate(siteConfig.routerPaths.auth.signIn)}>
+            Sign In
+          </Button>
+          <Button
+            color="primary"
+            onPress={() => navigate(siteConfig.routerPaths.auth.signUp)}
+          >
+            Sign Up
+          </Button>
+        </>
+      ) : (
+        <>
+          <Button onPress={() => navigate(siteConfig.routerPaths.dashboard.index)}>
+            Dashboard
+          </Button>
+        </>
+      )}
+    </>
   );
 };
 
