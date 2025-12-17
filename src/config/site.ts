@@ -1,3 +1,5 @@
+import { DiscordIcon, GithubIcon, TwitterIcon } from "@/components/icons";
+
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
@@ -25,4 +27,21 @@ export const siteConfig = {
     },
     pricing: "/pricing",
   },
+  socialLinks: [
+    {
+      label: "GitHub",
+      href: "https://github.com",
+      Icon: GithubIcon,
+    },
+    {
+      label: "Twitter",
+      href: "https://twitter.com",
+      Icon: TwitterIcon
+    },
+    {
+      label: "Discord",
+      href: "https://discord.com",
+      Icon: DiscordIcon
+    },
+  ],
 };

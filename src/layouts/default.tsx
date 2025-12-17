@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import { Navbar } from "@/components/navbar";
 
 export default function DefaultLayout({
@@ -11,9 +12,7 @@ export default function DefaultLayout({
       <main className="container mx-auto max-w-7xl px-6 flex-grow pt-16">
         {children}
       </main>
-      <footer className="w-full flex items-center justify-center py-3">
-       footer
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -9,7 +9,7 @@ const ProgressSection: React.FC = () => {
   return (
     <HomeSectionLayout
       subtitle="Share Your Files in 3 Easy Steps"
-      title="How to Upload Large Files and Folders Using Filemail"
+      title="How to Upload Large Files and Folders Using Pickle"
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {progressData.map((item) => (
