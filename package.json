@@ -25,6 +25,7 @@
     "@heroui/snippet": "2.2.29",
     "@heroui/switch": "2.2.25",
     "@heroui/system": "2.4.24",
+    "@heroui/table": "^2.2.28",
     "@heroui/theme": "2.4.24",
     "@heroui/toast": "^2.0.18",
     "@heroui/use-theme": "2.1.10",

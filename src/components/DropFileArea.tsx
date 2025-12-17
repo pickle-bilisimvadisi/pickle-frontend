@@ -13,9 +13,11 @@ import { useNavigate } from "react-router-dom";
 import { siteConfig } from "@/config/site";
 import { addToast } from "@heroui/toast";
 import { Button } from "@heroui/button";
+import {api, END_POINTS} from "@/services/api";
 
 export default function DropFileArea() {
   const [isDragging, setIsDragging] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const folderInputRef = useRef<HTMLInputElement>(null);
   const authState = useAuthStore((state) => state);
@@ -29,11 +31,92 @@ export default function DropFileArea() {
     navigate(siteConfig.routerPaths.auth.signIn);
   };
 
+  const uploadFiles = async (files: FileList) => {
+    setIsUploading(true);
+    const formData = new FormData();
+
+    Array.from(files).forEach((file) => {
+      formData.append("files", file);
+    });
+
+    try {
+      const response = await api.post(END_POINTS.UPLOAD.FILE, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      addToast({
+        title: "Files uploaded successfully",
+        severity: "success",
+      });
+      console.log("Upload response:", response.data);
+    } catch (error) {
+      addToast({
+        title: "Upload failed",
+        severity: "danger",
+      });
+      console.error("Upload error:", error);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const uploadFolder = async (files: FileList) => {
+    setIsUploading(true);
+    const formData = new FormData();
+
+    Array.from(files).forEach((file) => {
+      formData.append("files", file);
+      if (file.webkitRelativePath) {
+        formData.append("paths[]", file.webkitRelativePath);
+      }
+    });
+
+    try {
+      const response = await api.post(END_POINTS.UPLOAD.FOLDER, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      addToast({
+        title: "Folder uploaded successfully",
+        severity: "success",
+      });
+      console.log("Upload response:", response.data);
+    } catch (error) {
+      addToast({
+        title: "Upload failed",
+        severity: "danger",
+      });
+      console.error("Upload error:", error);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      uploadFiles(files);
+    }
+  };
+
+  const handleFolderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      uploadFolder(files);
+    }
+  };
+
   const handleClick = (type: "file" | "folder") => {
-    if (!authState.isAuthenticated) {
+    if (authState.isAuthenticated) {
       if (type === "folder") {
         folderInputRef.current?.click();
-      } else fileInputRef.current?.click();
+      } else {
+        fileInputRef.current?.click();
+      }
     } else {
       redirectLogin();
     }
@@ -48,12 +131,29 @@ export default function DropFileArea() {
     setIsDragging(false);
   };
 
-  const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
+  const onDrop = async (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
+
+    if (!authState.isAuthenticated) {
+      redirectLogin();
+      return;
+    }
+
     const files = e.dataTransfer.files;
-    if (files.length) {
-      console.log("Yüklenen dosyalar:", files);
+    if (files && files.length > 0) {
+      const firstFile = files[0];
+      console.log("Dropped files:", files);
+      if ((firstFile as any).webkitGetAsEntry?.()?.isDirectory) {
+        uploadFolder(files);
+      } else {
+        uploadFiles(files);
+      }
+    } else {
+      addToast({
+        title: "No files detected in drop",
+        severity: "warning",
+      });
     }
   };
 
@@ -100,18 +200,21 @@ export default function DropFileArea() {
           className="hidden"
           name="file"
           ref={fileInputRef}
-        ></input>
+          onChange={handleFileChange}
+          multiple
+        />
         <input
           type="file"
           className="hidden"
           name="files[]"
           ref={folderInputRef}
           id="files"
+          onChange={handleFolderChange}
           multiple
           directory=""
           webkitdirectory=""
           mozdirectory=""
-        ></input>
+        />
 
         <div className="mb-6 p-4 rounded-full bg-blue-50 text-blue-400">
           <CloudUploadIcon width={48} height={48} />
@@ -125,10 +228,20 @@ export default function DropFileArea() {
         </p>
         <div className="text-2xl my-4 text-gray-400">&</div>
         <div className="flex flex-col sm:flex-row items-center gap-4">
-          <Button onPress={() => handleClick("folder")} color="primary">
+          <Button 
+            onPress={() => handleClick("folder")} 
+            color="primary"
+            isLoading={isUploading}
+            isDisabled={isUploading}
+          >
             Select Folder
           </Button>
-          <Button onPress={() => handleClick("file")} color="primary">
+          <Button 
+            onPress={() => handleClick("file")} 
+            color="primary"
+            isLoading={isUploading}
+            isDisabled={isUploading}
+          >
             Select Files
           </Button>
         </div>
