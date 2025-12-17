@@ -1,3 +1,4 @@
+import DropFileArea from "@/components/DropFileArea";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import useAuthStore from "@/stores/useAuthStore";
 import React from "react";
@@ -11,7 +12,9 @@ const Dashboard: React.FC = () => {
 
   return (
     <DashboardLayout>
-      <div>Dashboard Page</div>
+      <div className="w-full flex flex-col items-center">
+        <DropFileArea />
+      </div>
     </DashboardLayout>
   );
 };

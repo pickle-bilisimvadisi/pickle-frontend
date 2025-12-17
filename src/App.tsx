@@ -6,7 +6,7 @@ import NotFound from "@/pages/NotFound";
 import { siteConfig } from "./config/site";
 import Dashboard from "./pages/dashboard";
 import FilesPage from "./pages/dashboard/files";
-import FileUpload from "./pages/dashboard/files/upload";
+
 
 const routerPaths = siteConfig.routerPaths;
 
@@ -27,10 +27,6 @@ function App() {
       {/* Dashboard Routes */}
       <Route element={<Dashboard />} path={routerPaths.dashboard.index} />
       <Route element={<FilesPage />} path={routerPaths.dashboard.files} />
-      <Route
-        element={<FileUpload />}
-        path={routerPaths.dashboard.filesUpload}
-      />
 
       {/* 404 Not Found */}
       <Route element={<NotFound />} path="*" />

@@ -43,13 +43,6 @@ export const SidebarWrapper: React.FC = () => {
                 icon={<ReportsIcon />}
                 href={dashboardRoutes.files}
               />
-
-              <SidebarItem
-                isActive={pathname === dashboardRoutes.filesUpload}
-                title="Upload File"
-                icon={<BalanceIcon />}
-                href={dashboardRoutes.filesUpload}
-              />
             </SidebarMenu>
 
             <SidebarMenu title="Updates">
