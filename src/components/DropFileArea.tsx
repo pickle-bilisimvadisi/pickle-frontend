@@ -36,7 +36,7 @@ export default function DropFileArea() {
     const formData = new FormData();
 
     Array.from(files).forEach((file) => {
-      formData.append("files", file);
+      formData.append("file", file);
     });
 
     try {
@@ -143,7 +143,6 @@ export default function DropFileArea() {
     const files = e.dataTransfer.files;
     if (files && files.length > 0) {
       const firstFile = files[0];
-      console.log("Dropped files:", files);
       if ((firstFile as any).webkitGetAsEntry?.()?.isDirectory) {
         uploadFolder(files);
       } else {
