@@ -2,6 +2,8 @@ import React from "react";
 import { DashboardNavbarWrapper } from "@/components/dashboard-navbar/dashboard-navbar";
 import { SidebarWrapper } from "@/components/sidebar/sidebar";
 import { SidebarContext } from "@/ctx/layout-context";
+import useAuthStore from "@/stores/useAuthStore";
+import { Navigate } from "react-router-dom";
 
 const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -10,6 +12,11 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
   const handleToggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
+
+  const authState = useAuthStore((state) => state);
+  if (authState.isAuthenticated === false) {
+    return <Navigate to="/404" replace />;
+  }
   return (
     <SidebarContext.Provider
       value={{

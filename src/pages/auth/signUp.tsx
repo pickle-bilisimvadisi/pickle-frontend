@@ -10,6 +10,8 @@ import { AUTH_SERVICE } from "@/services/authService";
 import { addToast } from "@heroui/toast";
 import { SecondProgressStep, ThirdProgressStep } from "./forgotPassword";
 import useAuthStore from "@/stores/useAuthStore";
+import { useNavigate } from "react-router-dom";
+import { siteConfig } from "@/config/site";
 
 const SignUp: React.FC = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -17,6 +19,7 @@ const SignUp: React.FC = () => {
   const [progress, setProgress] = useState<1 | 2 | 3>(1);
   const [email, setEmail] = useState<string>("");
   const authState = useAuthStore((state) => state);
+  const navigate = useNavigate();
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -67,7 +70,10 @@ const SignUp: React.FC = () => {
         severity: "success",
       });
       setProgress(3);
-      authState.setAccessToken(response.data?.data?.accessToken);
+      await authState.setAccessToken(response.data?.data?.access_token);
+      setTimeout(() => {
+        navigate(siteConfig.routerPaths.dashboard.index);
+      }, 1500);
     } catch (error) {
       console.error("Error verifying OTP:", error);
     } finally {
