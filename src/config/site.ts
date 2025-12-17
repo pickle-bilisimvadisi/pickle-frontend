@@ -28,6 +28,8 @@ export const siteConfig = {
     pricing: "/pricing",
     dashboard: {
       index: "/dashboard",
+      files: "/dashboard/files",
+      filesUpload: "/dashboard/files/upload",
     },
   },
   socialLinks: [

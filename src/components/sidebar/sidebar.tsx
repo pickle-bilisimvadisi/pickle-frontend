@@ -1,15 +1,15 @@
 import React from "react";
 import { Sidebar } from "./sidebar.styles";
 import { HomeIcon } from "../icons/sidebar/home-icon";
-import { AccountsIcon } from "../icons/sidebar/accounts-icon";
 import { ReportsIcon } from "../icons/sidebar/reports-icon";
-import { DevIcon } from "../icons/sidebar/dev-icon";
-import { ViewIcon } from "../icons/sidebar/view-icon";
-import { SettingsIcon } from "../icons/sidebar/settings-icon";
 import { SidebarItem } from "./sidebar-item";
 import { SidebarMenu } from "./sidebar-menu";
 import { useSidebarContext } from "@/ctx/layout-context";
 import { ChangeLogIcon } from "../icons/sidebar/changelog-icon";
+import { BalanceIcon } from "../icons/sidebar/balance-icon";
+import { siteConfig } from "@/config/site";
+
+const dashboardRoutes = siteConfig.routerPaths.dashboard;
 
 export const SidebarWrapper: React.FC = () => {
   const pathname = window.location.pathname;
@@ -33,39 +33,22 @@ export const SidebarWrapper: React.FC = () => {
             <SidebarItem
               title="Home"
               icon={<HomeIcon />}
-              isActive={pathname === "/dashboard"}
-              href="/dashboard"
+              isActive={pathname === dashboardRoutes.index}
+              href={dashboardRoutes.index}
             />
-            <SidebarMenu title="Main Menu">
+            <SidebarMenu title="File Management">
               <SidebarItem
-                isActive={pathname === "/accounts"}
-                title="Accounts"
-                icon={<AccountsIcon />}
-                href="accounts"
-              />
-
-              <SidebarItem
-                isActive={pathname === "/"}
-                title="Reports"
+                isActive={pathname === dashboardRoutes.files}
+                title="Files"
                 icon={<ReportsIcon />}
+                href={dashboardRoutes.files}
               />
-            </SidebarMenu>
 
-            <SidebarMenu title="General">
               <SidebarItem
-                isActive={pathname === "/developers"}
-                title="Developers"
-                icon={<DevIcon />}
-              />
-              <SidebarItem
-                isActive={pathname === "/view"}
-                title="View Test Data"
-                icon={<ViewIcon />}
-              />
-              <SidebarItem
-                isActive={pathname === "/settings"}
-                title="Settings"
-                icon={<SettingsIcon />}
+                isActive={pathname === dashboardRoutes.filesUpload}
+                title="Upload File"
+                icon={<BalanceIcon />}
+                href={dashboardRoutes.filesUpload}
               />
             </SidebarMenu>
 
