@@ -1,4 +1,5 @@
 import {
+  CustomerReview,
   FaqSection,
   HeroSection,
   PainPlanSection,
@@ -12,6 +13,7 @@ export default function IndexPage() {
       <HeroSection />
       <ProgressSection />
       <PainPlanSection />
+      <CustomerReview />
       <FaqSection />
     </DefaultLayout>
   );
