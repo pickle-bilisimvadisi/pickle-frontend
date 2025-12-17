@@ -4,6 +4,7 @@ import IndexPage from "@/pages/index";
 import { SignIn, SignUp, Logout, ForgotPassword } from "@/pages/auth";
 import NotFound from "@/pages/NotFound";
 import { siteConfig } from "./config/site";
+import Dashboard from "./pages/dashboard";
 
 const routerPaths = siteConfig.routerPaths;
 
@@ -20,6 +21,8 @@ function App() {
         element={<ForgotPassword />}
         path={routerPaths.auth.forgotPassword}
       />
+
+      <Route element={<Dashboard />} path={routerPaths.dashboard.index} />
 
       {/* 404 Not Found */}
       <Route element={<NotFound />} path="*" />

@@ -26,6 +26,9 @@ export const siteConfig = {
       logout: "/auth/logout",
     },
     pricing: "/pricing",
+    dashboard: {
+      index: "/dashboard",
+    },
   },
   socialLinks: [
     {
