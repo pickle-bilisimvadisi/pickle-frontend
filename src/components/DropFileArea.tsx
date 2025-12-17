@@ -87,7 +87,7 @@ export default function DropFileArea() {
         onDrop={onDrop}
         className={`
             relative z-0 flex flex-col items-center justify-center w-3/4 h-full px-6 py-10
-            border-2 border-dashed rounded-[32px] transition-all duration-300
+            border-2 border-dashed rounded-[32px] transition-all duration-300 dark:bg-primary/5
             ${
               isDragging
                 ? "border-blue-500 bg-blue-50"
@@ -118,10 +118,10 @@ export default function DropFileArea() {
         </div>
 
         <h3 className="text-md sm:text-lg font-semibold text-gray-700">
-          Dosyalarınızı ve klasörlerinizi buraya yükleyin
+          Upload your files and folders here
         </h3>
         <p className="text-gray-400 text-xs sm:text-sm mt-2">
-          Tıklayın ya da Dosyalarınızı Sürükleyip Bırakın
+          Click or Drag and Drop Your Files
         </p>
         <div className="text-2xl my-4 text-gray-400">&</div>
         <div className="flex flex-col sm:flex-row items-center gap-4">
